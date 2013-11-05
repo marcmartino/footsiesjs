@@ -1,4 +1,30 @@
-footsiesjs
-==========
+# Footsies
 
-a library for rapid prototyping without worrying about a backend
+rapid prototyping for the front end
+
+## Getting Started
+Download the [production version][min] or the [development version][max].
+
+[min]: https://raw.github.com/marcmartino/footsiesjs/master/dist/footsies.min.js
+[max]: https://raw.github.com/marcmartino/footsiesjs/master/dist/footsies.js
+
+In your web page:
+
+```html
+<script src="jquery.js"></script>
+<script src="dist/footsies.min.js"></script>
+<script>
+jQuery(function($) {
+  $.awesome(); // "awesome"
+});
+</script>
+```
+
+## Documentation
+_(Coming soon)_
+
+## Examples
+_(Coming soon)_
+
+## Release History
+_(Nothing yet)_

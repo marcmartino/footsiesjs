@@ -1,0 +1,25 @@
+{
+  "name": "footsies",
+  "title": "Footsies",
+  "description": "rapid prototyping for the front end",
+  "version": "0.1.0",
+  "homepage": "https://github.com/marcmartino/footsiesjs",
+  "author": {
+    "name": "marcmartino",
+    "email": "mrmarcmartino@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/marcmartino/footsiesjs.git"
+  },
+  "bugs": "https://github.com/marcmartino/footsiesjs/issues",
+  "licenses": [
+    {
+      "url": "https://github.com/marcmartino/footsiesjs/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+    // "jquery": "*"
+  },
+  "keywords": []
+}
