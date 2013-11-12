@@ -42,27 +42,49 @@
 
   var footsies = {
     db: {},
-    selectAll: function (whereObj, table) {
-      return _.findWhere(whereObj, table);
-    },
-    selectOne: function (whereObj, table) {
-      return _.find(whereObj, table);
-    },
+    selectAll: _.filter, //whereObj, table
+    selectOne: _.find, //whereObj
+    selectColumns: (function (keysArray, table) {
+      return _.map(
+        footsies.rowFunc(footsies.pick, keysArray)
+        , table);
+    }).autoCurry(2),
+    as: (function (newNames, table) {
+      return _.map(footsies.rowFunc(footsies.rename, newNames)
+        , table);
+    }).autoCurry(2),
+    restrict: (function (pred, table) {
+      return _.reduce(function (newTable, obj) {
+        if (truthy(pred(obj))) {
+          return newTable;
+        } else {
+          return _.without(newTable, obj);
+        }
+      }, table, table);
+    }).autoCurry(2),
+    sort: _.sortBy, //propertyName, table
     rename: function (newNameObj, row) {
       return _.reduce(function (o, nu, old) {
         if (_.has(row, old)) {
           o[nu] = row[old];
           delete o[old];
-          return o;
         }
         return o;
       },
       row, newNameObj);
     },
-    as: function (newNames, table) {
-      return _.map(function (obj) {
-        return footsies.rename(newNames, obj);
-      }, table);
+    pick: function (propArray, row) {
+      return _.reduce(function (accum, val) {
+        if (existy(row[val])) {
+          accum[val] = row[val];
+        }
+        return accum;
+      }, {}, propArray);
+    },
+    rowFunc: function (fun, params) {
+      return function (obj) {
+        return fun(params, obj);
+      }
     }
   }
 
@@ -78,16 +100,13 @@
          
       }
     }
-    console.log(footsies.db.Comments);
-    // console.log(
-    //   footsies.as({"name": "fullName"}, footsies.db.Users)
-    // );
+    console.log(footsies.db.Users);
     console.log(
-      footsies.db.Comments, footsies.selectOne({"postid": 1})
-      );
-    console.log(
-      footsies.selectOne({"postid": 1}, footsies.db.Comments)
-      );
+      // footsies.as({"name": "fullName"}, footsies.db.Users)
+      // footsies.selectColumns(["name", "private"], footsies.db.Users)
+      footsies.sort("name", footsies.db.Users)
+    );
+
 
 
   };
