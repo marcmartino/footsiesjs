@@ -42,10 +42,6 @@ var footsies = {
          
       }
     }
-    console.log(footsies.db.Users);
-    console.log(
-      footsies.leftJoin({rowNumber: "userid"}, footsies.db.Users, footsies.db.Comments)
-    );
   },
   init: function (startObj) {
     startObj.callback = footsies.storeDB;
