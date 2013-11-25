@@ -18,46 +18,46 @@ module.exports = function(grunt) {
     },
     concat: {
       options: {
-        banner: '<%= banner %>',
+        // banner: '<%= banner %>',
         stripBanners: true
       },
       dist: {
-        src: ['src/<%= pkg.name %>.js'],
-        dest: 'dist/<%= pkg.name %>.js'
+        src: ['src/footsies.js', 'src/*'],
+        dest: 'dist/footsies.js'
       },
     },
     uglify: {
       options: {
-        banner: '<%= banner %>'
+        // banner: '<%= banner %>'
       },
       dist: {
         src: '<%= concat.dist.dest %>',
-        dest: 'dist/<%= pkg.name %>.min.js'
+        dest: 'dist/footsies.min.js'
       },
     },
     qunit: {
       files: ['test/**/*.html']
     },
-    jshint: {
-      gruntfile: {
-        options: {
-          jshintrc: '.jshintrc'
-        },
-        src: 'Gruntfile.js'
-      },
-      src: {
-        options: {
-          jshintrc: 'src/.jshintrc'
-        },
-        src: ['src/**/*.js']
-      },
-      test: {
-        options: {
-          jshintrc: 'test/.jshintrc'
-        },
-        src: ['test/**/*.js']
-      },
-    },
+    // jshint: {
+    //   gruntfile: {
+    //     options: {
+    //       jshintrc: '.jshintrc'
+    //     },
+    //     src: 'Gruntfile.js'
+    //   },
+    //   src: {
+    //     options: {
+    //       jshintrc: 'src/.jshintrc'
+    //     },
+    //     src: ['src/**/*.js']
+    //   },
+    //   test: {
+    //     options: {
+    //       jshintrc: 'test/.jshintrc'
+    //     },
+    //     src: ['test/**/*.js']
+    //   },
+    // },
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -83,6 +83,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'qunit', 'clean', 'concat', 'uglify']);
+  grunt.registerTask('default', ['qunit', 'clean', 'concat', 'uglify']);
 
 };

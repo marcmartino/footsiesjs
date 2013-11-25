@@ -6,33 +6,50 @@
  * Licensed under the MIT license.
  */
 
-(function($) {
+function existy(x) {  return x != null; }
+function truthy(x) {  return (x !== false) && existy(x); }
+function cat() {
+  var head = _.first(arguments);
+  if (existy(head)) {
+    return head.concat.apply(head, _.rest(arguments));
+  }
+  return [];
+}
+function construct(head, tail) {
+  return cat([head], _.toArray(tail));
+}
 
-  // Collection method.
-  $.fn.footsies = function() {
-    return this.each(function(i) {
-      // Do something awesome to each selected element.
-      $(this).html('awesome' + i);
-    });
-  };
-
-  // Static method.
-  $.footsies = function(options) {
-    // Override default options with passed-in options.
-    options = $.extend({}, $.footsies.options, options);
-    // Return something awesome.
-    return 'awesome' + options.punctuation;
-  };
-
-  // Static method default options.
-  $.footsies.options = {
-    punctuation: '.'
-  };
-
-  // Custom selector.
-  $.expr[':'].footsies = function(elem) {
-    // Is this element awesome?
-    return $(elem).text().indexOf('awesome') !== -1;
-  };
-
-}(jQuery));
+var footsies = {
+  extend: function (obj) {
+    //adds attributes from obj  to this obj
+    var prop;
+    for (prop in obj) {
+      if (obj.hasOwnProperty(prop)) {
+        this[prop] = obj[prop];
+      }
+    }
+    return this;
+  },
+  storeDB: function(data, tabletop) {
+    var sheet;
+    for (sheet in data) {
+      if (data.hasOwnProperty(sheet)) {
+        var thisSheet = data[sheet];
+        var updated = new Date(thisSheet.raw.feed.updated["$t"]).toDateString();
+        // console.log(sheet + " updated: " + updated);
+        // console.log(thisSheet.elements);
+        footsies.db[sheet] = thisSheet.elements;
+         
+      }
+    }
+    console.log(footsies.db.Users);
+    console.log(
+      footsies.leftJoin({rowNumber: "userid"}, footsies.db.Users, footsies.db.Comments)
+    );
+  },
+  init: function (startObj) {
+    startObj.callback = footsies.storeDB;
+    Tabletop.init(startObj);
+    return this;
+  }
+}
